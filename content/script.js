@@ -8,11 +8,10 @@ const paper = document.createElement("button");
 const scissors = document.createElement("button");
 const resetButtonJS = document.createElement("button")
 const resetButtonHTML = document.querySelector(".reset-button")
-const scoreBoard = document.querySelector('.score-text')
-const computerText = document.querySelector('.computer-choice')
 const whyStatement = document.querySelector('.why-statement')
 const designation = document.querySelector('.designation')
 const buttons = document.querySelector('.buttons')
+const score = document.querySelector('.score')
 
 rock.textContent = "🪨";
 paper.textContent = "📄";
@@ -25,12 +24,12 @@ buttons.appendChild(rock);
 buttons.appendChild(paper);
 buttons.appendChild(scissors);
 
+
 playGame();
 
 function playGame() {
 
 
-  
   rock.addEventListener("click", () => handleUserChoice("ROCK"));
   paper.addEventListener("click", () => handleUserChoice("PAPER"));
   scissors.addEventListener("click", () => handleUserChoice("SCISSORS"));
@@ -62,8 +61,10 @@ function playRound(humanChoice, computerChoice) {
     (humanChoice === "SCISSORS" && computerChoice === "PAPER")
   ) {
     ++humanScore;
+    score.textContent = humanScore;
     //alert("Human Won!" + humanScore + " " + computerScore);
     designation.textContent = "You Won!"
+    score.innerHTML = 'Human Score: &nbsp&nbsp&nbsp&nbsp' + humanScore + '&nbsp&nbsp&nbsp&nbsp Computer Score: &nbsp&nbsp&nbsp&nbsp' + computerScore;
   } else if (humanChoice === computerChoice) {
     //alert("Tie!");
     designation.textContent = "Tie!"
@@ -71,6 +72,7 @@ function playRound(humanChoice, computerChoice) {
     ++computerScore;
     //alert("Computer won!" + humanScore + " " + computerScore);
     designation.textContent = "You Lost!"
+    score.innerHTML = 'Human Score: &nbsp&nbsp&nbsp&nbsp' + humanScore + '&nbsp&nbsp&nbsp&nbsp Computer Score: &nbsp&nbsp&nbsp&nbsp' + computerScore;
     
   }
 }
@@ -90,6 +92,7 @@ function endGame() {
   paper.remove()  
   scissors.remove()
   resetButtonHTML.appendChild(resetButtonJS)
+  score.textContent = "";
 }
 
 function resetGame() {
@@ -98,6 +101,6 @@ function resetGame() {
   buttons.appendChild(scissors);
   designation.textContent = 'Choose Rock, Paper, or Scissors!'
   whyStatement.textContent = "First to Score 5 Points Wins"
-  computerText.textContent = ""
   resetButtonJS.remove()
+  score.textContent = "";
 }
