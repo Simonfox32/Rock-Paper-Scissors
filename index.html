@@ -3,10 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="./content/script.js"></script> 
+    <script defer src="./content/script.js"></script> 
+    <link rel="stylesheet" href="./content/styles.css"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="./content/favicon.ico" />
     <title>Rock Paper Scissors</title>
 </head>
 <body>
-    
+    <header class="header">
+        <h1>ROCK PAPER SCISSORS</h1>
+    </header>
+    <div class="mid">
+    <section class="game-board">
+        <h2 class="designation">Choose Rock, Paper, or Scissors!</h2>
+        <h3 class="why-statement">First to Score 5 Points Wins</h3>
+        <div class="buttons"></div>
+        <div class="reset-button"></div>
+    </section>
+    <div class="scoreboard">
+        <p class="computer-choice"></p>
+        <p class="score-text"></p>
+    </div>
+</div>
 </body>
 </html>

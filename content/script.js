@@ -1,70 +1,103 @@
+let humanScore = 0;
+let computerScore = 0;
+let roundNumber = 0;
+
+const gameBoard = document.querySelector(".game-board");
+const rock = document.createElement("button");
+const paper = document.createElement("button");
+const scissors = document.createElement("button");
+const resetButtonJS = document.createElement("button")
+const resetButtonHTML = document.querySelector(".reset-button")
+const scoreBoard = document.querySelector('.score-text')
+const computerText = document.querySelector('.computer-choice')
+const whyStatement = document.querySelector('.why-statement')
+const designation = document.querySelector('.designation')
+const buttons = document.querySelector('.buttons')
+
+rock.textContent = "🪨";
+paper.textContent = "📄";
+scissors.textContent = "✂️";
+resetButtonJS.textContent = "Restart?"
 
 
-//convert input into number and store
-//randomize computer choice using number and store
-//check winner
+
+buttons.appendChild(rock);
+buttons.appendChild(paper);
+buttons.appendChild(scissors);
+
+playGame();
+
+function playGame() {
 
 
-let humanScore = 0
-let computerScore = 0
-
-PlayGame(
-
-)
-function PlayGame() {
-    for (let i = 0; i < 5; ++i) {
-    let humanChoice = getHumanChoice()
-    let computerChoice = getComputerChoice()
-    playRound(humanChoice, computerChoice)
-    }
-
-    alert("Final Scores:\nHuman: " + humanScore + "\nComputer: " + computerScore);
+  
+  rock.addEventListener("click", () => handleUserChoice("ROCK"));
+  paper.addEventListener("click", () => handleUserChoice("PAPER"));
+  scissors.addEventListener("click", () => handleUserChoice("SCISSORS"));
+  resetButtonJS.addEventListener("click", () => resetGame())
     
 }
 
+function handleUserChoice(userChoice) {
+  const computerChoice = getComputerChoice();
+  playRound(userChoice, computerChoice);
+  if (humanScore === 5) {
+    whyStatement.innerHTML = 'You reached 5 points and won the game!<br><br>' +
+    'Computer reached ' +  computerScore + ' points and lost!';
 
+    endGame()
+  } else if (computerScore === 5) {
+    whyStatement.innerHTML = 'Computer reached 5 points and won the game!<br><br>' +
+    'You reached ' + humanScore + ' points and lost!';
 
+    endGame()
+  }
+}
 
-function playRound (humanChoice, computerChoice) {
-     //human choice wins: human rock/scissors paper/rock scissors/paper 
-     if (humanChoice === 'ROCK' && computerChoice === 'SCISSORS' || humanChoice === 'PAPER' && computerChoice  === 'ROCK' || humanChoice === 'SCISSORS' && computerChoice === 'PAPER' ) {
-        alert('Human Won!')
-        humanScore++
-     } else if (humanChoice === computerChoice) {
-        alert('Tie!')
-     } else {
-        alert('Computer won!')
-        computerScore++
-     }
+function playRound(humanChoice, computerChoice) {
+  //human choice wins: human rock/scissors paper/rock scissors/paper
+  if (
+    (humanChoice === "ROCK" && computerChoice === "SCISSORS") ||
+    (humanChoice === "PAPER" && computerChoice === "ROCK") ||
+    (humanChoice === "SCISSORS" && computerChoice === "PAPER")
+  ) {
+    ++humanScore;
+    //alert("Human Won!" + humanScore + " " + computerScore);
+    designation.textContent = "You Won!"
+  } else if (humanChoice === computerChoice) {
+    //alert("Tie!");
+    designation.textContent = "Tie!"
+  } else {
+    ++computerScore;
+    //alert("Computer won!" + humanScore + " " + computerScore);
+    designation.textContent = "You Lost!"
+    
+  }
 }
 
 function getComputerChoice() {
-    let computerChoice = Math.floor(Math.random()*3) + 1
-    if (computerChoice === 1) {
-        computerChoice = 'Rock'
-    } else if (computerChoice === 2) {
-        computerChoice = 'Paper'
-    } else {
-        computerChoice = 'Scissors'
-    }
-    computerChoice = computerChoice.toUpperCase()
-    alert("Computer chose: " + computerChoice)
-    return computerChoice
+  const choices = ["ROCK", "PAPER", "SCISSORS"];
+  let computerChoice = choices[Math.floor(Math.random() * choices.length)];
+  //alert("Computer Chose: " + computerChoice);
+  whyStatement.textContent = 'Computer Chose: ' + computerChoice;
+  return computerChoice;
 }
 
-function getHumanChoice() {
-    let userInput
-    let reappear = true
+function endGame() {
+  humanScore = 0;
+  computerScore = 0;
+  rock.remove()
+  paper.remove()  
+  scissors.remove()
+  resetButtonHTML.appendChild(resetButtonJS)
+}
 
-    while (reappear === true) {
-       userInput = prompt("(Enter your choice: Rock, Paper, Scissors)")
-       userInput = userInput.toUpperCase() 
-
-       if (userInput === 'ROCK' || userInput === 'PAPER'|| userInput === 'SCISSORS') {
-        reappear = false
-       } else {
-        alert('Your response is not ROCK, PAPER, OR SCISSORS. Click OK to re-enter choice.')
-       }
-    }
-    return userInput
+function resetGame() {
+  buttons.appendChild(rock);
+  buttons.appendChild(paper);
+  buttons.appendChild(scissors);
+  designation.textContent = 'Choose Rock, Paper, or Scissors!'
+  whyStatement.textContent = "First to Score 5 Points Wins"
+  computerText.textContent = ""
+  resetButtonJS.remove()
 }
